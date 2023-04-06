@@ -13,14 +13,26 @@ let mouseY = 0
 const targetRotation = new THREE.Vector2()
 
 function onMouseMove(event) {
-    mouseX = (event.clientX / window.innerWidth) * 2 - 1
-    mouseY = (event.clientY / window.innerHeight) * 2 + 1
+    let clientX, clientY
+
+    if (event.type === 'mousemove') {
+        clientX = event.clientX
+        clientY = event.clientY
+    } else if (event.type === 'touchmove') {
+        clientX = event.touches[0].clientX
+        clientY = event.touches[0].clientY
+    }
+
+    mouseX = (clientX / window.innerWidth) * 2 - 1
+    mouseY = (clientY / window.innerHeight) * 2 + 1
 
     targetRotation.x = mouseY * Math.PI
     targetRotation.y = mouseX * Math.PI
 }
 
-document.addEventListener('mousemove', onMouseMove, false)
+window.addEventListener('mousemove', onMouseMove, false)
+window.addEventListener('touchstart', onMouseMove, false)
+window.addEventListener('touchmove', onMouseMove, false)
 
 const shaderMaterial = new THREE.ShaderMaterial({
     vertexShader: vertexShader,
