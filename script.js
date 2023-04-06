@@ -18,7 +18,7 @@ function onMouseMove(event) {
     if (event.type === 'mousemove') {
         clientX = event.clientX
         clientY = event.clientY
-    } else if (event.type === 'touchmove') {
+    } else if (event.type === 'touchmove' || event.type === 'touchstart') {
         clientX = event.touches[0].clientX
         clientY = event.touches[0].clientY
     }
@@ -28,10 +28,12 @@ function onMouseMove(event) {
 
     targetRotation.x = mouseY * Math.PI
     targetRotation.y = mouseX * Math.PI
+
+    // console.log({ clientX, clientY, mouseX, mouseY, tx: targetRotation.x, ty: targetRotation.y })
 }
 
 window.addEventListener('mousemove', onMouseMove, false)
-window.addEventListener('touchstart', onMouseMove, false)
+// window.addEventListener('touchstart', onMouseMove, false)
 window.addEventListener('touchmove', onMouseMove, false)
 
 const shaderMaterial = new THREE.ShaderMaterial({
